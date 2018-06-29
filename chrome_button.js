@@ -985,7 +985,6 @@ window.DBSDK = {
             }
         }
         else if (action === '#db#design-button#start_design_tool') {
-            console.log("aa");
             var image = e.data.image || '';
             var param = e.data.param || '';
             startDesignTool(image,param);
@@ -1010,7 +1009,12 @@ var startDesignTool = function(image_src,param){
     else{
         var doc_type = param.doc_type
     }
-    var designit_uri = DBSDK.buildButtonUri(image_src,doc_type,null,null,null,null,"image");
+    if (image_src == ""){
+        var designit_uri = DBSDK.buildButtonUri(null,doc_type,null,null,null,null,"image");
+    }
+    else{
+        var designit_uri = DBSDK.buildButtonUri(image_src,doc_type,null,null,null,null,"button");
+    }
     window.DBSDK.uuid = DBSDK.guid();
     console.log(designit_uri);
     DBSDK.startDesignToolExtension(designit_uri,window.DBSDK.uuid);

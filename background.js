@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
   var image_src = info.srcUrl;
-  console.log(info);
     chrome.storage.sync.get({
         defaultDocumentType: 'blog-graphic',
     }, function(items) {
@@ -24,6 +23,14 @@ chrome.contextMenus.create({
 
 chrome.browserAction.onClicked.addListener(function(activeTab)
 {
-    var newURL = "https://www.designbold.com/?utm_source=chrome_extension";
-    chrome.tabs.create({ url: newURL });
+    chrome.storage.sync.get({
+        defaultDocumentType: 'blog-graphic',
+    }, function(items) {
+        var document_type = items.defaultDocumentType;
+        chrome.tabs.executeScript(activeTab.id,{
+            code : 'var designboldframe = document.getElementById("designbold-extension-iframe");var data= {action:"#db#design-button#start_design_tool",image:"",param:{doc_type:"'+document_type+'"}};designboldframe.contentWindow.postMessage(data,"*");designboldframe.style.display="block";'
+        },function(){
+
+        });
+    });
 });
