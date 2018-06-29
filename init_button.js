@@ -155,7 +155,6 @@ DBSDK_EXTENSION.mouseleave_function = function(event){
 DBSDK_EXTENSION.start_design_tool = function(event){
     var el = event.target;
     var image_src = el.dataset.image;
-    console.log(image_src);
     chrome.storage.sync.get({
         defaultDocumentType: 'blog-graphic',
     }, function(items) {

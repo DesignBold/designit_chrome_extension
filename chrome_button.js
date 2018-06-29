@@ -1016,6 +1016,5 @@ var startDesignTool = function(image_src,param){
         var designit_uri = DBSDK.buildButtonUri(image_src,doc_type,null,null,null,null,"button");
     }
     window.DBSDK.uuid = DBSDK.guid();
-    console.log(designit_uri);
     DBSDK.startDesignToolExtension(designit_uri,window.DBSDK.uuid);
 };
