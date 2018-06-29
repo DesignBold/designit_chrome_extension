@@ -1,0 +1,9 @@
+{"extName": {
+   "message": "DesignBold",
+   "description": "DesignBold button design"},
+ "extDesc": {
+   "message": "DesignBold Context Menu Button",
+   "description": "Extension description"},
+ "openContextMenuTitle": {
+   "message": "Open Image With DesignBold",
+   "description": "context menu button text"}}
