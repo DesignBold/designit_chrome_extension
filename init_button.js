@@ -13,6 +13,15 @@ var DB_EXTENSION = {
     default_max_height : 800
 };
 var DBSDK_EXTENSION = {};
+DBSDK_EXTENSION.domain = (function(){
+    var i=0,domain=document.domain,p=domain.split('.'),s='_gd'+(new Date()).getTime();
+    while(i<(p.length-1) && document.cookie.indexOf(s+'='+s)==-1){
+        domain = p.slice(-1-(++i)).join('.');
+        document.cookie = s+"="+s+";domain="+domain+";";
+    }
+    document.cookie = s+"=;expires=Thu, 01 Jan 1970 00:00:01 GMT;domain="+domain+";";
+    return domain;
+})();
 /* bind event & handler on element */
 DBSDK_EXTENSION.bindEventHandler = function (target, type, callback, useCapture) {
     useCapture = useCapture || false;
@@ -76,7 +85,7 @@ DBSDK_EXTENSION.init_designbold_layer = function(){
 DBSDK_EXTENSION.init_hover_action = function(){
     chrome.storage.sync.get({
         defaultDocumentType: "blog-graphic",
-        hoverButtonStatus : 0,
+        hoverButtonStatus : 1,
         hoverButtonPosition : 1,
         minWidth : DB_EXTENSION.default_min_width,
         maxWidth : DB_EXTENSION.default_max_width,
@@ -168,9 +177,43 @@ DBSDK_EXTENSION.start_design_tool = function(event){
 
 chrome.storage.sync.get({
     hoverButtonStatus: 0,
+    websiteLimit : 0,
+    blackList : "",
+    whiteList : "",
 }, function(items) {
+    var domain = DBSDK_EXTENSION.domain;
+    var domain_allow = 0;
+    items.websiteLimit = parseInt(items.websiteLimit);
+    if (items.websiteLimit){
+        var white_list_array = items.whiteList.split(",");
+        if (white_list_array.length == 0 || (white_list_array.length == 1 && white_list_array[0] == "")){
+            domain_allow = 1;
+        }
+        else{
+            if (white_list_array.indexOf(domain) !== -1){
+                domain_allow = 1;
+            }
+            else{
+                domain_allow = 0;
+            }
+        }
+    }
+    else{
+        var black_list_array = items.blackList.split(",");
+        if (black_list_array.length == 0 || (black_list_array.length == 1 && black_list_array[0] == "")){
+            domain_allow = 1;
+        }
+        else{
+            if (black_list_array.indexOf(domain) !== -1){
+                domain_allow = 0;
+            }
+            else{
+                domain_allow = 1;
+            }
+        }
+    }
     items.hoverButtonStatus = parseInt(items.hoverButtonStatus)
-    if (items.hoverButtonStatus){
+    if (items.hoverButtonStatus && domain_allow){
         DBSDK_EXTENSION.meta_allow = document.querySelector("meta[name='designbold']");
         if (DBSDK_EXTENSION.meta_allow == null){
             DBSDK_EXTENSION.allow = true;

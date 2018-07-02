@@ -9,73 +9,108 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/10.1.0/validator.min.js"></script>
 </head>
 <body>
 
 
 <div class="container">
-    <h2>DesignBold Options</h2>
-
-
-    <div class="form-group">
-        <label for="document_type">Select default document type:</label>
-        <select id="document_type" class="form-control">
-        </select>
-    </div>
-    <div class="form-group">
-        <label>Hover button:</label>
-        <div class="form-check">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" value="1" name="hover_button_status">Enable
-            </label>
-        </div>
-        <div class="form-check">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" value="0" name="hover_button_status">Disable
-            </label>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="document_type">Hover button position:</label>
-        <select id="hover_button_position" class="form-control">
-            <option value="1">Top left</option>
-            <option value="2">Top right</option>
-            <option value="3">Bottom left</option>
-            <option value="4">Bottom right</option>
-        </select>
+    <div class="jumbotron text-center" style="margin-bottom:0">
+        <h1 style="font-size:36px">DesignBold Extension Options</h1>
+        <p></p>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-3"></div>
+        <div class="col-6">
             <div class="form-group">
-                <label for="min_width">Min width:</label>
-                <input type="number" data-toggle="tooltip" title="Value between 50-4000 px" class="form-control" id="min_width">
+                <label for="document_type">Select default document type:</label>
+                <select id="document_type" class="form-control">
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Hover button:</label>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" value="1" name="hover_button_status">Enable
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" value="0" name="hover_button_status">Disable
+                    </label>
+                </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="max_width">Max width:</label>
-                <input type="number" data-toggle="tooltip" title="Value between 50-4000 px"  class="form-control" id="max_width">
-            </div>
-        </div>
+        <div class="col-3"></div>
     </div>
+    <div class="row" id="hover_button_status_container">
+        <div class="col-3"></div>
+        <div class="col-6">
+                <div class="form-group">
+                    <label for="hover_button_position">Hover button position:</label>
+                    <select id="hover_button_position" class="form-control">
+                        <option value="1">Top left</option>
+                        <option value="2">Top right</option>
+                        <option value="3">Bottom left</option>
+                        <option value="4">Bottom right</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="min_width">Min width:</label>
+                            <input type="number" data-toggle="tooltip" title="Value between 50-4000 px" class="form-control" id="min_width">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="max_width">Max width:</label>
+                            <input type="number" data-toggle="tooltip" title="Value between 50-4000 px"  class="form-control" id="max_width">
+                        </div>
+                    </div>
+                </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="min_height">Min height:</label>
-                <input type="number" data-toggle="tooltip" title="Value between 50-4000 px" class="form-control" id="min_height">
-            </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="min_height">Min height:</label>
+                            <input type="number" data-toggle="tooltip" title="Value between 50-4000 px" class="form-control" id="min_height">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="max_height">Max height:</label>
+                            <input type="number" data-toggle="tooltip" title="Value between 50-4000 px" class="form-control" id="max_height">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="website_limit">Website limit:</label>
+                    <select id="website_limit" class="form-control">
+                        <option value="0">Black list</option>
+                        <option value="1">White list</option>
+                    </select>
+                </div>
+                <div class="row" id="black_list_input">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="black_list">Website Black list:</label>
+                            <textarea type="text" data-toggle="tooltip" title="Fill domain if you don't want to show hover button, ex: fb.com,ex.com" class="form-control" id="black_list"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="white_list_input">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="white_list">Website White list:</label>
+                            <textarea type="text" data-toggle="tooltip" title="Fill domain if you want to show hover button, ex: fb.com,ex.com" class="form-control" id="white_list"></textarea>
+                        </div>
+                    </div>
+                </div>
+            <a type="button" id="save" class="btn btn-success">Save</a>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="max_height">Max height:</label>
-                <input type="number" data-toggle="tooltip" title="Value between 50-4000 px" class="form-control" id="max_height">
-            </div>
-        </div>
+        <div class="col-3"></div>
     </div>
-
-
-    <a type="button" id="save" class="btn btn-success">Save</a>
 </div>
 
 <div class="container">

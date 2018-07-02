@@ -1,7 +1,7 @@
 {
   "name": "__MSG_extName__",
   "short_name": "__MSG_extName__",
-   "version": "0.2",
+   "version": "0.2.1",
    "manifest_version": 2,
    "description": "__MSG_extDesc__",
    "icons": {"16": "16.png", "128": "128.png"},
@@ -9,7 +9,7 @@
   "content_scripts": [ {
 	"matches": ["https://*/*","http://*/*"],
 	"js": ["init_button.js"],
-	"all_frames": true
+	"all_frames": false
   }],
    "default_locale": "en",
 	"browser_action": {

@@ -61,6 +61,9 @@ function save_options() {
     var max_width = document.querySelector("#max_width").value;
     var min_height = document.querySelector("#min_height").value;
     var max_height = document.querySelector("#max_height").value;
+    var black_list_temp = document.querySelector("#black_list").value;
+    var white_list_temp = document.querySelector("#white_list").value;
+    var website_limit = $("#website_limit > option:selected").val();
     chrome.storage.sync.set({
         defaultDocumentType: doc_type,
         hoverButtonStatus : hover_button_status,
@@ -69,6 +72,9 @@ function save_options() {
         maxWidth : max_width,
         minHeight : min_height,
         maxHeight : max_height,
+        websiteLimit : website_limit,
+        blackList : black_list_temp,
+        whiteList : white_list_temp,
     }, function() {
         // Update status to let user know options were saved.
         var status_container = document.getElementById("status_container");
@@ -83,17 +89,61 @@ function save_options() {
     });
 }
 
+function init_hover_button_status(items){
+    $("input[name='hover_button_status'][value='"+items.hoverButtonStatus+"']").attr("checked","checked");
+    if (items.hoverButtonStatus == "1"){
+        $("#hover_button_status_container").show();
+    }
+    else{
+        $("#hover_button_status_container").hide();
+    }
+    $("input[name='hover_button_status']").click(function(event){
+        var target = $(event.currentTarget);
+        if (target.val() == "1"){
+            $("#hover_button_status_container").show();
+        }
+        else{
+            $("#hover_button_status_container").hide();
+        }
+    });
+}
+
+function init_website_limit(items){
+    $("select#website_limit option[value='"+items.websiteLimit+"']").attr("selected","selected");
+    if (items.websiteLimit == "0"){
+        $("#black_list_input").show();
+        $("#white_list_input").hide();
+    }
+    else{
+        $("#black_list_input").hide();
+        $("#white_list_input").show();
+    }
+    $("select#website_limit").change(function(event){
+        if ($(this).val() == "0"){
+            $("#black_list_input").show();
+            $("#white_list_input").hide();
+        }
+        else{
+            $("#black_list_input").hide();
+            $("#white_list_input").show();
+        }
+    });
+}
+
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
 function restore_options() {
     chrome.storage.sync.get({
         defaultDocumentType: "blog-graphic",
-        hoverButtonStatus : 0,
+        hoverButtonStatus : 1,
         hoverButtonPosition : 1,
         minWidth : DB_EXTENSION.default_min_width,
         maxWidth : DB_EXTENSION.default_max_width,
         minHeight : DB_EXTENSION.default_min_height,
         maxHeight : DB_EXTENSION.default_max_height,
+        websiteLimit : 0,
+        blackList : "",
+        whiteList : "",
     }, function(items) {
         var template = _.template($("#document_type_select_tpl").html());
         var select_document_type_html = template({doc_types:DB.response.doc_types,selected:items.defaultDocumentType});
@@ -102,8 +152,11 @@ function restore_options() {
         document.querySelector("#max_width").value = items.maxWidth;
         document.querySelector("#min_height").value = items.minHeight;
         document.querySelector("#max_height").value = items.maxHeight;
+        document.querySelector("#white_list").value = items.whiteList;
+        document.querySelector("#black_list").value = items.blackList;
         $("#hover_button_position  option[value='"+items.hoverButtonPosition+"']").attr("selected","selected");
-        $("input[name='hover_button_status'][value='"+items.hoverButtonStatus+"']").attr("checked","checked");
+        init_hover_button_status(items);
+        init_website_limit(items);
     });
     $('[data-toggle="tooltip"]').tooltip();
 }
