@@ -542,6 +542,7 @@ window.DBSDK = {
     };
 
     DBSDK.API_CREATE = DBSDK.API.scheme + '://' + DBSDK.API.host + '/' + DBSDK.API.path;
+    DBSDK.COLLECTION_LIST = DBSDK.API.scheme + '://' + DBSDK.API.host + '/' + "collection/";
 
     DBSDK.BROWSER_UNSUPPORTED = DBSDK.API.scheme + '://' + DBSDK.API.host + "/" + "browser/unsupported";
 
@@ -1009,12 +1010,20 @@ var startDesignTool = function(image_src,param){
     else{
         var doc_type = param.doc_type
     }
+    var status = 1;
     if (image_src == ""){
-        var designit_uri = DBSDK.buildButtonUri(null,doc_type,null,null,null,null,"image");
+        status = 0;
+        var designit_uri = DBSDK.COLLECTION_LIST + doc_type;
     }
     else{
+        status = 1;
         var designit_uri = DBSDK.buildButtonUri(image_src,doc_type,null,null,null,null,"button");
     }
     window.DBSDK.uuid = DBSDK.guid();
-    DBSDK.startDesignToolExtension(designit_uri,window.DBSDK.uuid);
+    if (status){
+        DBSDK.startDesignToolExtension(designit_uri,window.DBSDK.uuid);
+    }
+    else{
+        window.open(designit_uri,'_blank');
+    }
 };
