@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>DesignBold Options</title>
     <meta charset="utf-8">
@@ -10,43 +11,117 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/10.1.0/validator.min.js"></script>
+
+    <style type="text/css">
+        * {
+            color: #333;
+
+        }
+
+        .jumbotron {
+            margin: 0px 0px 20px 0px;
+            padding: 40px 0px;
+            border-radius: 0px;
+
+        }
+
+        .jumbotron img {
+            width: 60px;
+            display: inline-block;
+            margin: 0px 10px 0px 0px;
+            height: 60px;
+            position: relative;
+            top: -12px;
+        }
+
+        .jumbotron h1 {
+            line-height: 60px;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        .btn-success {
+            background-color: #0099fe;
+            line-height: 40px;
+            border: none !important;
+            color: #fff !important;
+
+            border-radius: 3px !important;
+            padding: 0px 60px;
+            font-weight: 600;
+            margin-bottom: 50px;
+
+        }
+
+        .btn-success:hover {
+            opacity: 0.9;
+            cursor: pointer;
+            border-radius: 3px !important;
+            background-color: #0099fe !important;
+        }
+
+        .allright {
+            padding: 20px 0px;
+            border-top: 1px solid #ccc;
+            text-align: center;
+            font-size: 14px;
+            color: #999;
+        }
+
+        .allright a {
+            color: $active-color;
+        }
+
+        .allright a:hover {
+            text-decoration: underline;
+        }
+
+        .disable-content {
+            opacity: 0.3;
+        }
+
+    </style>
 </head>
+
 <body>
 
 
-<div class="container">
-    <div class="jumbotron text-center" style="margin-bottom:0">
-        <h1 style="font-size:36px">DesignBold Extension Options</h1>
-        <p></p>
-    </div>
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
-            <div class="form-group">
-                <label for="document_type">Select default document type:</label>
-                <select id="document_type" class="form-control">
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1 style="font-size:36px">
+                <img alt="" src="128.png"> DesignBold Extension Options</h1>
+            <p></p>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="document_type">Select default document type:</label>
+                    <select id="document_type" class="form-control">
                 </select>
-            </div>
-            <div class="form-group">
-                <label>Hover button:</label>
-                <div class="form-check">
-                    <label class="form-check-label">
+                </div>
+                <div class="form-group">
+                    <label>Hover button:</label>
+                    <div class="form-check">
+                        <label class="form-check-label">
                         <input type="radio" class="form-check-input" value="1" name="hover_button_status">Enable
                     </label>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
                         <input type="radio" class="form-check-input" value="0" name="hover_button_status">Disable
                     </label>
+                    </div>
                 </div>
             </div>
+            <div class="col-3"></div>
         </div>
-        <div class="col-3"></div>
-    </div>
-    <div class="row" id="hover_button_status_container">
-        <div class="col-3"></div>
-        <div class="col-6">
-                <div class="form-group">
+        <div class="row" id="hover_button_status_container">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="form-group disable-content">
                     <label for="hover_button_position">Hover button position:</label>
                     <select id="hover_button_position" class="form-control">
                         <option value="1">Top left</option>
@@ -65,7 +140,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="max_width">Max width:</label>
-                            <input type="number" data-toggle="tooltip" title="Value between 50-4000 px"  class="form-control" id="max_width">
+                            <input type="number" data-toggle="tooltip" title="Value between 50-4000 px" class="form-control" id="max_width">
                         </div>
                     </div>
                 </div>
@@ -107,35 +182,44 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-3"></div>
         </div>
-        <div class="col-3"></div>
-    </div>
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
-            <a type="button" id="save" class="btn btn-success">Save</a>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <a type="button" id="save" class="btn btn-success">Save</a>
+            </div>
+            <div class="col-3"></div>
         </div>
-        <div class="col-3"></div>
+
+        <div class="allright">
+
+            Extension powered by <a href="http://designbold.com/" target="_blank">DesignBold.com</a> </div>
     </div>
-</div>
 
-<div class="container">
+    <div class="container">
 
-    <div class="box">
-        <div id="status_container" style="display: none" class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong id="status"></strong>
+        <div class="box">
+            <div id="status_container" style="display: none" class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong id="status"></strong>
+            </div>
         </div>
     </div>
-</div>
 
-<script type="text/template" id="document_type_select_tpl">
-    <% _.each(doc_types,function(doc_category){ %>
-    <% _.each(doc_category.items,function(doc_type){ %>
-    <option <% if(doc_type.slug == selected){ %> selected="selected" <% } %> value="<%= doc_type.slug %>"><%= doc_type.title %>(<%= doc_type.width + ' x ' + doc_type.height + doc_type.unit %>)</option>
-    <% }) %>
-    <% }) %>
-</script>
-<script src="options.js"></script>
+    <script type="text/template" id="document_type_select_tpl">
+        <% _.each(doc_types,function(doc_category){ %>
+            <% _.each(doc_category.items,function(doc_type){ %>
+                <option <% if(doc_type.slug==s elected){ %> selected="selected"
+                    <% } %> value="
+                        <%= doc_type.slug %>">
+                            <%= doc_type.title %>(
+                                <%= doc_type.width + ' x ' + doc_type.height + doc_type.unit %>)</option>
+                <% }) %>
+                    <% }) %>
+    </script>
+    <script src="options.js"></script>
 </body>
+
 </html>
