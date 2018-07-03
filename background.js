@@ -1,6 +1,7 @@
 // Copyright (c) 2013 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+var COLLECTION_URI = "https://www.designbold.com/collection/"
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
   var image_src = info.srcUrl;
     chrome.storage.sync.get({
@@ -26,11 +27,6 @@ chrome.browserAction.onClicked.addListener(function(activeTab)
     chrome.storage.sync.get({
         defaultDocumentType: 'blog-graphic',
     }, function(items) {
-        var document_type = items.defaultDocumentType;
-        chrome.tabs.executeScript(activeTab.id,{
-            code : 'var designboldframe = document.getElementById("designbold-extension-iframe");var data= {action:"#db#design-button#start_design_tool",image:"",param:{doc_type:"'+document_type+'"}};designboldframe.contentWindow.postMessage(data,"*");designboldframe.style.display="block";'
-        },function(){
-
-        });
+        window.open(COLLECTION_URI + items.defaultDocumentType);
     });
 });

@@ -54,7 +54,7 @@ function validate_option(){
 // Saves options to chrome.storage
 function save_options() {
     validate_option();
-    var doc_type = document.getElementById('document_type').value;
+    var doc_type = $("#document_type > option:selected").val();
     var hover_button_status = $("input[name='hover_button_status']:checked").val();
     var hover_button_position = $("#hover_button_position > option:selected").val();
     var min_width = document.querySelector("#min_width").value;

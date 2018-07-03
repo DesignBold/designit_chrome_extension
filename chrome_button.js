@@ -8,7 +8,7 @@
  */
 
 window.DBSDK_Cfg = {
-    export_mode: ['download','preview'],
+    export_mode: ['download'],
     export_callback: function (resultUrl,document_id, exportTarget) {
         // do something with design image URL, which is only accessible for 24 hours
     },

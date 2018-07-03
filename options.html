@@ -52,6 +52,7 @@
             padding: 0px 60px;
             font-weight: 600;
             margin-bottom: 50px;
+            -webkit-appearance: initial !important;
 
         }
 
@@ -91,7 +92,7 @@
     <div class="container">
         <div class="jumbotron text-center">
             <h1 style="font-size:36px">
-                <img alt="" src="128.png"> DesignBold Extension Options</h1>
+                <img alt="" src="128.png"> DesignIt Extension Options</h1>
             <p></p>
         </div>
         <div class="row">
@@ -121,7 +122,7 @@
         <div class="row" id="hover_button_status_container">
             <div class="col-3"></div>
             <div class="col-6">
-                <div class="form-group disable-content">
+                <div class="form-group">
                     <label for="hover_button_position">Hover button position:</label>
                     <select id="hover_button_position" class="form-control">
                         <option value="1">Top left</option>
@@ -130,6 +131,12 @@
                         <option value="4">Bottom right</option>
                     </select>
                 </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row" id="">
+            <div class="col-3"></div>
+            <div class="col-6">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -211,13 +218,9 @@
     <script type="text/template" id="document_type_select_tpl">
         <% _.each(doc_types,function(doc_category){ %>
             <% _.each(doc_category.items,function(doc_type){ %>
-                <option <% if(doc_type.slug==s elected){ %> selected="selected"
-                    <% } %> value="
-                        <%= doc_type.slug %>">
-                            <%= doc_type.title %>(
-                                <%= doc_type.width + ' x ' + doc_type.height + doc_type.unit %>)</option>
-                <% }) %>
-                    <% }) %>
+                <option <% if(doc_type.slug == selected){ %> selected="selected" <% } %> value="<%= doc_type.slug %>"> <%= doc_type.title %>(<%= doc_type.width + ' x ' + doc_type.height + doc_type.unit %>)</option>
+            <% }) %>
+        <% }) %>
     </script>
     <script src="options.js"></script>
 </body>
