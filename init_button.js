@@ -7,8 +7,8 @@
 var DB_EXTENSION = {
     min_dimension : 50,
     max_dimension : 4000,
-    default_min_width : 100,
-    default_min_height : 100,
+    default_min_width : 150,
+    default_min_height : 150,
     default_max_width : 1200,
     default_max_height : 800,
     websiteLimit : ['facebook.com','designbold.com','google.com'],
@@ -100,13 +100,13 @@ DBSDK_EXTENSION.init_hover_action = function(){
                 items.maxWidth = parseInt(items.maxWidth);
                 items.minHeight = parseInt(items.minHeight);
                 items.maxHeight = parseInt(items.maxHeight);
+                items.hoverButtonStatus = parseInt(items.hoverButtonStatus);
                 images[i].db_config = items;
                 images[i].addEventListener("mouseover",DBSDK_EXTENSION.mouseover_function,false);
                 images[i].addEventListener("mouseleave",DBSDK_EXTENSION.mouseleave_function,false);
             }
         }
     });
-
 };
 
 DBSDK_EXTENSION.mouseover_function = function(event){
@@ -117,32 +117,35 @@ DBSDK_EXTENSION.mouseover_function = function(event){
     var scroll_top = document.documentElement.scrollTop;
     var db_config = el.db_config;
     if (rect.width >= db_config.minWidth && rect.width <= db_config.maxWidth && rect.height >= db_config.minHeight && rect.height <= db_config.maxHeight){
-        switch (db_config.hoverButtonPosition){
-            case "1" :
-                button.style.top = (scroll_top + rect.top + 10) + "px";
-                button.style.left = (rect.left + 10) + "px";
-                break;
-            case "2" :
-                button.style.top = (scroll_top + rect.top + 10) + "px";
-                button.style.left = (rect.left + rect.width - 90) + "px";
-                break;
-            case "3" :
-                button.style.top = (scroll_top + rect.top + rect.height - 40) + "px";
-                button.style.left = (rect.left + 10) + "px";
-                break;
-            case "4" :
-                button.style.top = (scroll_top + rect.top + rect.height - 40) + "px";
-                button.style.left = (rect.left + rect.width - 90) + "px";
-                break;
-            default :
-                button.style.top = (scroll_top + rect.top + 10) + "px";
-                button.style.left = (rect.left + 10) + "px";
-                break;
+        if (db_config.hoverButtonStatus){
+            switch (db_config.hoverButtonPosition){
+                case "1" :
+                    button.style.top = (scroll_top + rect.top + 10) + "px";
+                    button.style.left = (rect.left + 10) + "px";
+                    break;
+                case "2" :
+                    button.style.top = (scroll_top + rect.top + 10) + "px";
+                    button.style.left = (rect.left + rect.width - 90) + "px";
+                    break;
+                case "3" :
+                    button.style.top = (scroll_top + rect.top + rect.height - 40) + "px";
+                    button.style.left = (rect.left + 10) + "px";
+                    break;
+                case "4" :
+                    button.style.top = (scroll_top + rect.top + rect.height - 40) + "px";
+                    button.style.left = (rect.left + rect.width - 90) + "px";
+                    break;
+                default :
+                    button.style.top = (scroll_top + rect.top + 10) + "px";
+                    button.style.left = (rect.left + 10) + "px";
+                    break;
+            }
+            button.style.display = "block";
+            button.removeEventListener("click",DBSDK_EXTENSION.start_design_tool,false);
+            button.dataset.image = el.src;
+            button.onclick = DBSDK_EXTENSION.start_design_tool;
         }
-        button.style.display = "block";
-        button.removeEventListener("click",DBSDK_EXTENSION.start_design_tool,false);
-        button.dataset.image = el.src;
-        button.onclick = DBSDK_EXTENSION.start_design_tool;
+        getPort().postMessage({action:'create'});
     }
 
 };
@@ -153,6 +156,7 @@ DBSDK_EXTENSION.mouseleave_function = function(event){
     var button = document.querySelector("#design_bold_hover_button");
     var scroll_top = document.documentElement.scrollTop;
     if ( (event.clientX >= rect.left + rect.width) || (event.clientX <= rect.left) || event.clientY <= rect.top || event.clientY >= (rect.top + rect.height) ){
+        getPort().postMessage({action:'remove'});
         button.style.display = "none";
         button.dataset.image = "";
         button.onclick = function(){
@@ -220,7 +224,7 @@ chrome.storage.sync.get({
     }
 
     items.hoverButtonStatus = parseInt(items.hoverButtonStatus)
-    if (items.hoverButtonStatus && domain_allow){
+    if (domain_allow){
         DBSDK_EXTENSION.meta_allow = document.querySelector("meta[name='designbold']");
         if (DBSDK_EXTENSION.meta_allow == null){
             DBSDK_EXTENSION.allow = true;
@@ -241,3 +245,12 @@ chrome.storage.sync.get({
         }
     }
 });
+
+var getPort = function() {
+    if (DBSDK_EXTENSION._port) return DBSDK_EXTENSION._port;
+    DBSDK_EXTENSION._port = chrome.extension.connect({name: 'contextMenus'});
+    DBSDK_EXTENSION._port.onDisconnect.addListener(function() {
+        DBSDK_EXTENSION._port = null;
+    });
+    return DBSDK_EXTENSION._port;
+};

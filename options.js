@@ -2,8 +2,8 @@ var DB =  {"msg":"Success!","response":{"id":"Document","resource":{"js":"docume
 var DB_EXTENSION = {
     min_dimension : 50,
     max_dimension : 4000,
-    default_min_width : 100,
-    default_min_height : 100,
+    default_min_width : 150,
+    default_min_height : 150,
     default_max_width : 1200,
     default_max_height : 800
 };
