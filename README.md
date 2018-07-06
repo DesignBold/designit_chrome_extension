@@ -1,7 +1,7 @@
-**DesignBold Extension**
+**DesignIT Chrome Extension** Install here  [Chrome store](https://chrome.google.com/webstore/detail/designbold/hcnlanjijjffpmlkpedbijamgmkhgkkm)
 
 DesignBold Extension is a chrome extension built to edit images right when you see them. Using this extension, you can design with the exact image you want from almost any site. The design tools from DesignBold include all the options that you need: Text, Filters, Crops, Grids, and so much more! The designed image is server-based rendered.
-Install the extension from [Chrome store](https://chrome.google.com/webstore/detail/designbold/hcnlanjijjffpmlkpedbijamgmkhgkkm "here")
+
 
 **OPTION**
 
