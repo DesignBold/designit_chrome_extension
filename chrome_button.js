@@ -811,7 +811,9 @@ window.DBSDK = {
             DBSDK.$('.db-overlay[data-id="' + uuid + '"] .db-lightbox')[0].appendChild(iframe);
             source_frame = window.document.getElementById('db-design-frame-'+uuid);
             DBSDK.bindEventHandler(DBSDK.$('.db-overlay[data-id="' + uuid + '"] .db-close-lightbox')[0], 'click', function (e) {
-                e.currentTarget.parentNode.style.display = 'none';
+                var el = e.currentTarget.parentNode;
+                el.parentNode.removeChild(el);
+                //e.currentTarget.parentNode.style.display = 'none';
                 window.parent.postMessage({action:"#db-extension#design-button#close"},"*");
             });
         }
