@@ -930,17 +930,19 @@ window.DBSDK = {
                     var downloadUrl = e.data.src || null;
                     var document_id = e.data.document_id || null;
                     uuid = design_frame[0].getAttribute('data-id');
-                    var btn = DBSDK.$('.db-btn-designit[data-id="' + uuid + '"]')[0],
+                    var btn = DBSDK.$('.db-btn-designit[data-id="' + uuid + '"]')[0];
+                    var previewTarget = false;
+                    if (typeof btn == 'object'){
                         previewTarget = btn.getAttribute('data-db-preview-target');
+                    }
                     // hide the iframe modal
                     DBSDK.$('.db-overlay[data-id="' + uuid + '"] .db-close-lightbox')[0].click();
                     setTimeout(function () {
+                        var output  = {buttonId:uuid};
                         if (previewTarget) {
-                            DBSDK.exportCallback(downloadUrl,document_id, previewTarget);
+                            output.previewTarget = previewTarget;
                         }
-                        else {
-                            DBSDK.exportCallback(downloadUrl,document_id);
-                        }
+                        DBSDK.exportCallback(downloadUrl,document_id,output);
                     }, 0);
                 }
             }
@@ -1028,4 +1030,14 @@ var startDesignTool = function(image_src,param){
     else{
         window.open(designit_uri,'_blank');
     }
+};
+
+window.DBSDK_Cfg = {
+    export_mode : ['publish'],
+    export_callback: function (resultUrl,document_id,options) {
+        // do something with design image URL, which is only accessible for 24 hours
+        console.log(resultUrl);
+        console.log("callback document id" + document_id);
+        console.log("callback button id : ", options);
+    },
 };
